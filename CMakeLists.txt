@@ -66,3 +66,17 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 
     # Add user defined libraries
 )
+
+# --- Flash via ST-LINK (STM32CubeProgrammer CLI) ---
+find_program(STM32_PROGRAMMER_CLI STM32_Programmer_CLI
+    HINTS "$ENV{STM32CLT_PATH}/STM32CubeProgrammer/bin")
+
+if(STM32_PROGRAMMER_CLI)
+    add_custom_target(flash
+        COMMAND ${STM32_PROGRAMMER_CLI} -c port=SWD mode=UR -w $<TARGET_FILE:${CMAKE_PROJECT_NAME}> -v -rst
+        DEPENDS ${CMAKE_PROJECT_NAME}
+        USES_TERMINAL
+        COMMENT "Flashing ${CMAKE_PROJECT_NAME}.elf via ST-LINK")
+else()
+    message(WARNING "STM32_Programmer_CLI not found - 'flash' target disabled")
+endif()
