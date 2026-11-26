@@ -1,0 +1,14 @@
+# Build output
+build/
+
+# clangd / IDE caches
+.cache/
+compile_commands.json
+*.map
+
+# VS Code - keep only shared project configs
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
